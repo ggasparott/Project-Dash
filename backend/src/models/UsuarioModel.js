@@ -3,16 +3,16 @@ const db = require('../config/db');
 class UsuarioModel {
   // Criar novo usuário
   static async criar(email, senhaHash) {
-    const query = 'INSERT INTO usuarios (email, senha) VALUES (?, ?)';
-    const [result] = await db.execute(query, [email, senhaHash]);
-    return result.insertId;
+    const query = 'INSERT INTO usuarios (email, senha) VALUES ($1, $2) RETURNING id';
+    const result = await db.query(query, [email, senhaHash]);
+    return result.rows[0].id;
   }
 
-  // Buscar usuário por email (para login)
+  // Buscar usuário por email
   static async buscarPorEmail(email) {
-    const query = 'SELECT * FROM usuarios WHERE email = ?';
-    const [rows] = await db.execute(query, [email]);
-    return rows[0]; // Retorna o primeiro usuário ou undefined
+    const query = 'SELECT * FROM usuarios WHERE email = $1';
+    const result = await db.query(query, [email]);
+    return result.rows[0];
   }
 }
 
