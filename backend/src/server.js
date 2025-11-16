@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
+const authRoutes = require('./routes/authRoutes');
 require('dotenv').config();
+require('./config/db');
 
 const app = express();
 
@@ -8,9 +10,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Rotas (vamos criar depois)
-// app.use('/api/auth', require('./routes/authRoutes'));
-// app.use('/api/atendimentos', require('./routes/atendimentoRoutes'));
+// Rotas 
+app.use('/api/auth', authRoutes);
+
 
 // Rota de teste
 app.get('/', (req, res) => {
