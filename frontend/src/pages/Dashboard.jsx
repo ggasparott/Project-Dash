@@ -113,15 +113,15 @@ function Dashboard() {
           />
 
           <KPICard
-            title="Duração Média"
-            value={kpis?.duracao_media_formatada || '0s'}
-            subtitle={`${kpis?.duracao_media_segundos || 0} segundos`}
+            title="Tickets em Aberto"
+            value={kpis?.tickets_abertos || 0}
+            subtitle={`${kpis?.status?.pendentes || 0} pendentes`}
             icon={
-              <svg className="w-6 h-6 text-fast-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              <svg className="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             }
-            color="cyan"
+            color="yellow"
           />
 
           <KPICard
