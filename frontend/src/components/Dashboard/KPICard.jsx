@@ -14,6 +14,11 @@ function KPICard({ title, value, subtitle, icon, color = "cyan" }) {
       bg: 'bg-green-500/20',
       text: 'text-green-400',
       border: 'border-green-500/30'
+    },
+    yellow: {
+      bg: 'bg-yellow-500/20',
+      text: 'text-yellow-400',
+      border: 'border-yellow-500/30'
     }
   };
 

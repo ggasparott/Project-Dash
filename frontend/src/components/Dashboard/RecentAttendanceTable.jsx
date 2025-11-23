@@ -7,12 +7,6 @@ function RecentAttendanceTable({ atendimentos = [] }) {
     });
   };
 
-  const formatDuration = (seconds) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}min ${secs}s`;
-  };
-
   const getSentimentBadge = (sentimento) => {
     const classes = {
       positivo: 'bg-green-500/20 text-green-400',
@@ -48,7 +42,6 @@ function RecentAttendanceTable({ atendimentos = [] }) {
               <th className="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Telefone</th>
               <th className="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Sentimento</th>
               <th className="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Status</th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Duração</th>
               <th className="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Data</th>
             </tr>
           </thead>
@@ -73,16 +66,13 @@ function RecentAttendanceTable({ atendimentos = [] }) {
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
-                    {formatDuration(atendimento.duracao_segundos)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
                     {formatDate(atendimento.created_at)}
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="6" className="px-6 py-8 text-center text-gray-400">
+                <td colSpan="5" className="px-6 py-8 text-center text-gray-400">
                   Nenhum atendimento encontrado
                 </td>
               </tr>
