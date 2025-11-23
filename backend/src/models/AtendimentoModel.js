@@ -17,8 +17,7 @@ class AtendimentoModel {
     static async calcularKPIs(usuarioId) {
         const queryGeral = `
         SELECT 
-            COUNT(*) as total,
-            COALESCE(AVG(duracao_segundos), 0) as duracao_media
+            COUNT(*) as total
         FROM atendimentos 
         WHERE usuario_id = $1
     `;
@@ -71,12 +70,12 @@ class AtendimentoModel {
     return {
       // Dados gerais
       total: parseInt(resultGeral.rows[0].total),
-      duracao_media: parseFloat(resultGeral.rows[0].duracao_media),
       
       // Status
       resolvidos: parseInt(resultStatus.rows[0].resolvidos),
       pendentes: parseInt(resultStatus.rows[0].pendentes),
       encaminhados: parseInt(resultStatus.rows[0].encaminhados),
+      tickets_abertos: parseInt(resultStatus.rows[0].pendentes) + parseInt(resultStatus.rows[0].encaminhados),
       
       // Sentimentos
       positivos: parseInt(resultSentimento.rows[0].positivos),
