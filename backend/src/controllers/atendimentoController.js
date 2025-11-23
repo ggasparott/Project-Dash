@@ -14,7 +14,7 @@ class AtendimentoController {
                 });
             }
             
-            const resultado = await atendimentoService.listar(parseInt(usuario_id));
+            const resultado = await atendimentoService.listar(usuario_id);
             
             return res.status(200).json({
                 mensagem: 'Atendimentos encontrados',
@@ -43,7 +43,7 @@ class AtendimentoController {
                 });
             }
             
-            const kpis = await atendimentoService.obterKPIs(parseInt(usuario_id));
+            const kpis = await atendimentoService.obterKPIs(usuario_id);
             
             return res.status(200).json({
                 mensagem: 'KPIs calculados com sucesso',
