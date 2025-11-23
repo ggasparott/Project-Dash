@@ -5,12 +5,22 @@ import { supabase } from '../config/supabase';
  */
 export const cadastrar = async (email, senha) => {
   try {
+    // 1. Criar usuário no Supabase Auth
     const { data, error } = await supabase.auth.signUp({
       email,
       password: senha,
     });
 
     if (error) throw error;
+
+    // 2. Sincronizar com a tabela usuarios (se necessário)
+    if (data.user) {
+      await supabase.from('usuarios').insert({
+        id: data.user.id,
+        email: data.user.email,
+        created_at: new Date().toISOString()
+      });
+    }
 
     return {
       mensagem: 'Cadastrado! Verifique seu email para confirmar.',
