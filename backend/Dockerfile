@@ -20,9 +20,9 @@ RUN mkdir -p logs
 # Expor porta
 EXPOSE 3000
 
-# Healthcheck
-HEALTHCHECK --interval=30s --timeout=3s \
-  CMD curl -f http://localhost:3000/health || exit 1
+# Healthcheck mais robusto
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
+  CMD curl -f http://127.0.0.1:3000/health || exit 1
 
 # Comando para iniciar
 CMD ["node", "src/server.js"]
