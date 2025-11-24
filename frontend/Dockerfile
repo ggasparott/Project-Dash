@@ -1,5 +1,5 @@
 # Etapa 1: Build
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
@@ -36,6 +36,9 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Copiar configuração do Nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Criar diretório de logs
+RUN mkdir -p /var/log/nginx
 
 # Expor porta 80
 EXPOSE 80
