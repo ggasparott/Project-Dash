@@ -7,24 +7,35 @@ if (!process.env.DATABASE_URL) {
   process.exit(1);
 }
 
+// Configuração do pool com tratamento de erro melhorado
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
+  ssl: process.env.NODE_ENV === 'production' ? {
     rejectUnauthorized: false
-  },
+  } : false,
   max: 20,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 10000,
 });
 
+// Handler de erro do pool
+pool.on('error', (err, client) => {
+  console.error('❌ Erro inesperado no pool de conexões:', err.message);
+});
+
+// Testar conexão
 pool.connect()
   .then(client => {
     console.log('✅ Conectado ao PostgreSQL (Supabase)!');
+    console.log('📊 Database:', client.database);
     client.release();
   })
   .catch(err => {
     console.error('❌ Erro ao conectar ao PostgreSQL:', err.message);
-    console.error('Stack:', err.stack);
+    if (err.code) console.error('Código do erro:', err.code);
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Stack completo:', err.stack);
+    }
   });
 
 module.exports = pool;
