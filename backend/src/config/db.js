@@ -7,12 +7,12 @@ if (!process.env.DATABASE_URL) {
   process.exit(1);
 }
 
-// Configuração do pool com tratamento de erro melhorado
+// Configuração do pool com SSL habilitado
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === 'production' ? {
-    rejectUnauthorized: false
-  } : false,
+  ssl: {
+    rejectUnauthorized: false // Necessário para Supabase
+  },
   max: 20,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 10000,
