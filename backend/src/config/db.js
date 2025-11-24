@@ -18,12 +18,14 @@ const pool = new Pool({
   connectionTimeoutMillis: 10000,
 });
 
-// Handler de erro do pool
+// Handler de erro do pool - NÃO DEIXAR O SERVIDOR CAIR
 pool.on('error', (err, client) => {
   console.error('❌ Erro inesperado no pool de conexões:', err.message);
+  console.error('⚠️ Mantendo servidor rodando...');
+  // NÃO chamar process.exit() aqui para manter o servidor vivo
 });
 
-// Testar conexão
+// Testar conexão inicial (opcional, não crítico)
 pool.connect()
   .then(client => {
     console.log('✅ Conectado ao PostgreSQL (Supabase)!');
@@ -31,11 +33,9 @@ pool.connect()
     client.release();
   })
   .catch(err => {
-    console.error('❌ Erro ao conectar ao PostgreSQL:', err.message);
-    if (err.code) console.error('Código do erro:', err.code);
-    if (process.env.NODE_ENV === 'development') {
-      console.error('Stack completo:', err.stack);
-    }
+    console.error('❌ Erro na conexão inicial ao PostgreSQL:', err.message);
+    console.error('⚠️ O servidor vai tentar reconectar nas próximas requisições...');
+    // NÃO fazer exit aqui, deixar o servidor tentar reconectar
   });
 
 module.exports = pool;
