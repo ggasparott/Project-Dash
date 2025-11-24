@@ -23,17 +23,36 @@ app.use(express.urlencoded({ extended: true }));
 
 // Health check
 app.get('/health', (req, res) => {
-  res.json({ 
-    status: 'ok', 
-    message: 'API Dashboard rodando!',
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development'
-  });
+  try {
+    res.json({ 
+      status: 'ok', 
+      message: 'API Dashboard rodando!',
+      timestamp: new Date().toISOString(),
+      environment: process.env.NODE_ENV || 'development',
+      hasDatabase: !!process.env.DATABASE_URL
+    });
+  } catch (error) {
+    console.error('Erro no health check:', error);
+    res.status(500).json({ error: error.message });
+  }
 });
 
 // Rota de teste
 app.get('/', (req, res) => {
-  res.json({ message: '🚀 API do Dashboard CRM rodando!' });
+  try {
+    res.json({ 
+      message: '🚀 API do Dashboard CRM rodando!',
+      env: {
+        node_env: process.env.NODE_ENV,
+        port: process.env.PORT,
+        has_db: !!process.env.DATABASE_URL,
+        has_supabase: !!process.env.SUPABASE_URL
+      }
+    });
+  } catch (error) {
+    console.error('Erro na rota raiz:', error);
+    res.status(500).json({ error: error.message });
+  }
 });
 
 // Rotas 
@@ -53,6 +72,8 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`🔥 Servidor rodando na porta ${PORT}`);
+  console.log(`📍 Ambiente: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`🌐 CORS habilitado para: ${process.env.FRONTEND_URL || 'localhost'}`);
 });
