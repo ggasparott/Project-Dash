@@ -12,16 +12,6 @@ RUN npm ci
 # Copiar código fonte
 COPY . .
 
-# Build Arguments (variáveis de ambiente para build)
-ARG VITE_API_URL
-ARG VITE_SUPABASE_URL
-ARG VITE_SUPABASE_ANON_KEY
-
-# Criar .env para o build
-RUN echo "VITE_API_URL=${VITE_API_URL}" > .env && \
-    echo "VITE_SUPABASE_URL=${VITE_SUPABASE_URL}" >> .env && \
-    echo "VITE_SUPABASE_ANON_KEY=${VITE_SUPABASE_ANON_KEY}" >> .env
-
 # Build da aplicação
 RUN npm run build
 
