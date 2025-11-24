@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Health check
-app.get('/health', (req, res) => {
+app.get(['/health', '/api/health'], (req, res) => {
   try {
     res.json({ 
       status: 'ok', 
@@ -38,7 +38,7 @@ app.get('/health', (req, res) => {
 });
 
 // Rota de teste
-app.get('/', (req, res) => {
+app.get(['/', '/api'], (req, res) => {
   try {
     res.json({ 
       message: '🚀 API do Dashboard CRM rodando!',
