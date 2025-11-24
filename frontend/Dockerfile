@@ -43,9 +43,5 @@ RUN mkdir -p /var/log/nginx
 # Expor porta 80
 EXPOSE 80
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s \
-  CMD wget --quiet --tries=1 --spider http://localhost/ || exit 1
-
 # Comando para iniciar o Nginx
 CMD ["nginx", "-g", "daemon off;"]
