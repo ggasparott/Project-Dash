@@ -118,7 +118,7 @@ function Cadastro() {
           {error && (
             <div className="bg-red-500/10 border border-red-500/50 text-red-300 px-4 py-3 rounded-xl mb-6">
               <div className="flex items-center">
-                <span className="text-xl mr-2">⚠️</span>
+                <span className="text-xl mr-2"></span>
                 {error}
               </div>
             </div>
@@ -127,7 +127,7 @@ function Cadastro() {
           {success && (
             <div className="bg-green-500/10 border border-green-500/50 text-green-300 px-4 py-3 rounded-xl mb-6">
               <div className="flex items-center">
-                <span className="text-xl mr-2">✅</span>
+                <span className="text-xl mr-2"></span>
                 Conta criada! Redirecionando para login...
               </div>
             </div>
